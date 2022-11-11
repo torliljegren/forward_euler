@@ -5,24 +5,26 @@ from xlsxwriter import Workbook
 import matplotlib.pyplot as plt
 
 XLS_FILENAME = 'fw_euler_output.xls' # file name of output
-CREATE_PLOT = True # program creates a pyplot if True
-CREATE_XLSX = False # program creates an Excel doc with point data in program directory if True
+CREATE_PLOT = True # program creates a pyplot with the solution curve if True
+CREATE_XLSX = True # program creates an Excel doc with point data in program directory if True
 
 
 # the function on the right hand side of the differential equation y'=f(x,y)
-def f(x, y):
-    return 2*sin(y) - x
+def f(x: float, y: float) -> float:
+    return log(x)-log(y) # (2,0; 2,25)
+    # return -x*y/10+10
+    # return 2*sin(y) - x
 
 
-# step length
-h = 10**-6
+# step length (recommended 10^-7 < h < 10^-2)
+h = 10**-3
 
 # start at (x0, y0)
 x0 = 0
 y0 = 5
 
 # stop at xstop
-xstop = 5
+xstop = 10
 
 # variables for x and y
 x = x0
@@ -74,9 +76,9 @@ if CREATE_PLOT:
     # prepare a pyplot to display the curve
     fig, ax = plt.subplots()
 
-    ax.set(xlabel='x', ylabel='y',
-           title=None)
+    ax.set(xlabel='x', ylabel='y', title=None)
     ax.grid()
     plt.title('Lösningskurva')
     ax.plot([point[0] for point in xylist], [point[1] for point in xylist])
+    print('Done')
     plt.show()
